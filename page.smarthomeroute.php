@@ -18,7 +18,6 @@ $display = isset($_REQUEST['display'])?$_REQUEST['display']:'smarthomeroute';
 $type = isset($_REQUEST['type'])?$_REQUEST['type']:'tool';
 
 $action = isset($_REQUEST['action'])?$_REQUEST['action']:'';
-$name = isset($_REQUEST['name'])?$_REQUEST['name']:'';
 $cid = isset($_REQUEST['cid'])?$_REQUEST['cid']:'';
 $destination = isset($_REQUEST['destination'])?$_REQUEST['destination']:'';
 
@@ -30,8 +29,7 @@ if(!isset($action))
 	$action='';
 switch($action) {
 	case "add":
-		smarthomeroute_add($name, $cid, $destination);
-		$name='';
+		smarthomeroute_add($cid, $destination);
 		$cid='';
 		$destination='';
 		//needreload(); 
@@ -44,7 +42,7 @@ switch($action) {
 		redirect_standard();
 	break;
 	case "edit":
-		smarthomeroute_edit($extdisplay, $name, $cid, $destination);
+		smarthomeroute_edit($extdisplay, $cid, $destination);
 		//needreload();
 		redirect_standard('extdisplay');
 	break;
@@ -77,7 +75,6 @@ else {
 	//If we have some data, load it up... this means we are editing.
 	if($extdisplay!=""){
 		$customerInfo=smarthomeroute_get($extdisplay);
-		$name=$customerInfo['name'];
 		$cid=$customerInfo['cid'];
 		$destination=$customerInfo['destination'];
 	}
@@ -85,7 +82,7 @@ else {
 	
 	if(isset($customerInfo) && is_array($customerInfo)){
 		$action="edit";
-		echo "<h2> ".$extdisplay." ".$name."</h2>";
+		echo "<h2> ".$extdisplay." ".$cid."</h2>";
 		echo "<p><a href=\"".$delURL."\">"._("Delete SmartHome Route Entry")."</a></p>";
 	}
 	else {
@@ -107,17 +104,6 @@ echo "<table>";
 echo "<tr><td colspan=2><h5>";
 echo ($extdisplay ? _('Edit SmartHome Route Entry') : _('Add SmartHome Route'));
 echo "</h5></td></tr>\n";
-
-//Name
-echo "<tr ";
-echo ($extdisplay ? '' : '');
-echo "><td>";
-echo "<a href=\"#\" class=\"info\" >"._("Name")."\n";
-echo "<span>"._("Entry Name (REQUIRED)")."</span></a>\n";
-echo "</td>";
-echo "<td>";
-echo "<input type=text name=\"name\" value=\"$name\" tabindex=".++$tabindex.">\n";
-echo "</td></tr>\n";
 
 //CID (Caller ID)
 echo "<tr><td>\n";
@@ -148,7 +134,6 @@ if(cform.name.value == ""){
 
 function addNew_onsubmit() {
 
-	var msgInvalidName = "<?php echo _("Please enter a descriptive name for the entry");?>";
 	var msgInvalidCid = "<?php echo _("You must have a Caller_ID for each entry.");?>";
 
 	if(isEmpty(cform.name.value)){
