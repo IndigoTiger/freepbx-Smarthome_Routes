@@ -18,10 +18,8 @@ if($amp_conf["AMPDBENGINE"] == "sqlite3")  {
 	$sql = "
 	CREATE TABLE IF NOT EXISTS smarthomeroute 
 	(
-		`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		`name` varchar(45) not null, 
-		`cid` varchar(45) null, 
-		`destination` varchar(50) null 
+		`cid` varchar(45) NOT NULL PRIMARY KEY, 
+		`destination` varchar(50) NOT NULL 
 	);
 	";
 }
@@ -29,10 +27,8 @@ else  {
 	$sql = "
 	CREATE TABLE IF NOT EXISTS smarthomeroute 
 	(
-		`id` int UNIQUE AUTO_INCREMENT,	 
-		`name` varchar(45) not null, 
-		`cid` varchar(45) not null,  
-		`destination` varchar(50) null 
+		`cid` varchar(45) NOT NULL PRIMARY KEY,  
+		`destination` varchar(50) NOT NULL 
 	);
 	";
 }
