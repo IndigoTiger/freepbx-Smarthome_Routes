@@ -3,7 +3,7 @@
 	<name>SmartHome Route DB</name>
 	<version>1.0.0.0</version>
 	<type>tool</type>
-	<category>Third Party Addon</category>
+	<category>Applications</category>
 	<menuitems>
 		<smarthomeroute>SmartHome Routes</smarthomeroute>
 	</menuitems>
